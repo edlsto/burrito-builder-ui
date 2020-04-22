@@ -60,6 +60,11 @@ class OrderForm extends Component {
           key={ingredient}
           name={ingredient}
           onClick={(e) => this.handleIngredientChange(e)}
+          disabled={
+            this.state.ingredients.filter(
+              (ingredientState) => ingredientState === ingredient
+            ).length >= 2
+          }
         >
           {ingredient}
         </button>
