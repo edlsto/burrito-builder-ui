@@ -38,7 +38,7 @@ class OrderForm extends Component {
   };
 
   render() {
-    const validated = this.state.ingredients.length >= 2;
+    const validated = this.state.ingredients.length >= 1;
     const possibleIngredients = [
       "beans",
       "steak",
