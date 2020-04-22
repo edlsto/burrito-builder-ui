@@ -16,3 +16,9 @@ export const postNewOrder = (order) => {
     }),
   }).then((response) => response.json());
 };
+
+export const removeOrder = (id) => {
+  return fetch(`http://localhost:3001/api/v1/orders/${id}`, {
+    method: "DELETE",
+  }).then((response) => response.status);
+};
