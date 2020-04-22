@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./Orders.css";
 import { connect } from "react-redux";
-import { setOrders } from "../../actions";
-import { getOrders } from "../../apiCalls";
+import { setOrders, deleteOrder } from "../../actions";
+import { getOrders, removeOrder } from "../../apiCalls";
 
 class Orders extends Component {
   constructor(props) {
@@ -15,6 +15,17 @@ class Orders extends Component {
       .catch((err) => console.error("Error fetching:", err));
   }
 
+  handleDelete = async (id) => {
+    try {
+      const response = await removeOrder(id);
+      if (response === 204) {
+        this.props.deleteOrder(id);
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   render() {
     const orderEls = this.props.orders.map((order) => {
       return (
@@ -25,6 +36,7 @@ class Orders extends Component {
               return <li key={i}>{ingredient}</li>;
             })}
           </ul>
+          <button onClick={() => this.handleDelete(order.id)}>Delete</button>
         </div>
       );
     });
@@ -40,6 +52,7 @@ const mapStateToProps = ({ orders }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setOrders: (orders) => dispatch(setOrders(orders)),
+  deleteOrder: (id) => dispatch(deleteOrder(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Orders);
